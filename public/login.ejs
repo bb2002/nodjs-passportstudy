@@ -8,11 +8,46 @@
 </head>
 <body>
     <form action="/auth/login" method="POST">
-        EMAIL : <input type="email" name="user_email" />
+        EMAIL : <input type="email" name="user_email" id="email"/>
         <br>
-        PASSWORD : <input type="password" name="user_passwd" />
+        PASSWORD : <input type="password" name="user_passwd" id="passwd"/>
         <br><br>
-        <input type="submit" value="로그인" />
     </form>
+
+    <button type="button" id="login_ajax">로그인</button>
+
+    <div class="result"></div>
+
+    <script>
+        var loginButton = document.getElementById("login_ajax")
+        loginButton.addEventListener("click", () => {
+            let email = document.getElementById("email").value
+            let passwd = document.getElementById("passwd").value
+            sendAjaxLogin("http://localhost:3000/auth/login", email, passwd)
+        })
+
+        function sendAjaxLogin(url, email, passwd) {
+            let data = JSON.stringify({
+                "email": email,
+                "passwd": passwd
+            })
+
+            let xhr = new XMLHttpRequest()
+            xhr.open("POST", url)
+            xhr.setRequestHeader("Content-Type", "application/json")
+            xhr.send(data)
+
+            xhr.addEventListener("load", () => {
+                let result = JSON.parse(xhr.responseText)
+                let div = document.querySelector(".result")
+
+                if(result.name == null) {
+                    div.innerHTML = "<b>아이디 또는 비밀번호가 맞지 않습니다.</b><br>"
+                } else {
+                    location.href = "../../"
+                }
+            })
+        }
+    </script>
 </body>
 </html>

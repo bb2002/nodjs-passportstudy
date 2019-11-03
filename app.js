@@ -7,6 +7,7 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy
 const session = require("express-session")
 const flash = require("connect-flash")
+const path = require("path")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -23,6 +24,14 @@ app.use(flash())
 app.use(express.static("./public"))
 
 app.use("/auth", authRouter)
+app.get("/", (req, res) => {
+    let user = req.user
+    if(user == null) {
+        user = ""
+    }
+
+    res.render(path.join(__dirname, "./public/index.ejs"), { "name": user })
+})
 
 app.listen(3000, () => {
     console.log("SERVER START! On 3000 port.")
