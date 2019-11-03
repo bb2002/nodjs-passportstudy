@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>가입회원</title>
+</head>
+<body>
+    <form action="/auth/join" method="POST">
+        EMAIL : <input type="email" name="user_email" />
+        <br>
+        NAME : <input type="text" name="user_name" />
+        <br>
+        PASSWORD : <input type="password" name="user_passwd" />
+        <br><br>
+        <input type="submit" value="가입회원" />
+    </form>
+
+    <b><%= message %></b>
+</body>
+</html>
